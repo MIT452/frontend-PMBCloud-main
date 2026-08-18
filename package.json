@@ -1,0 +1,113 @@
+{
+  "name": "intranet",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "main.cjs",
+  "build": {
+    "appId": "com.tonapp.react",
+    "productName": "Intranet",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "dist/**",
+      "main.cjs",
+      "server/**",
+      "!**/node_modules/*/{test,__tests__}/**",
+      "!**/node_modules/emnapi/core",
+      "!**/*.map"
+    ],
+    "asarUnpack": [
+      "server/src/**"
+    ],
+    "extraResources": [
+      {
+        "from": "../server/src",
+        "to": "server"
+      }
+    ]
+  },
+  "scripts": {
+    "lhci:audit": "lhci autorun --config=lighthouserc.json",
+    "lhci:server": "lhci server",
+    "lhci:healthcheck": "lhci healthcheck",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:analyze": "vite build --mode analyze",
+    "build:prod": "vite build --mode production",
+    "audit": "npm audit --audit-level=high",
+    "analyze": "open dist/stats.html",
+    "size": "ls -lh dist/assets/*.js 2>/dev/null | grep -E '\\.js$' || echo 'Aucun fichier JS trouvé'",
+    "test:bundle": "npm run build && echo '=== TAILLE DU BUNDLE ===' && npm run size",
+    "pwa:check": "npx pwa-asset-generator --help || echo 'Installer: npm install -g pwa-asset-generator'",
+    "serve:prod": "npx serve -s dist -l 8080 --cors --config=./serve-config.json",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start": "tsc -b && vite build && vite preview --host",
+    "pack": "electron-builder --dir",
+    "desktop": "electron-builder",
+    "lhci:test": "npm run build:prod && node scripts/inject-csp.js && npx serve -s dist -l 8080 --cors --config=./serve-config.json & sleep 15 && lhci autorun --config=lighthouserc.json && pkill -f 'serve'",
+    "lhci:ci": "npm run build:prod && node scripts/inject-csp.js && npx @lhci/cli autorun --config=./lighthouserc.json",
+    "serve:csp": "node scripts/serve-csp.js",
+    "fix-lighthouse-issues": "bash scripts/fix-lighthouse-issues.sh",
+    "lhci:custom": "npm run build && npm run serve:csp & lhci autorun --config=lighthouserc.json && pkill -f 'node scripts/serve-csp.js'"
+  },
+  "dependencies": {
+    "@emnapi/core": "^1.4.5",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@supabase/supabase-js": "^2.53.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.4",
+    "bcrypt": "^6.0.0",
+    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "express": "^5.2.1",
+    "framer-motion": "^12.23.12",
+    "js-file-download": "^0.4.12",
+    "lucide-react": "^0.548.0",
+    "mammoth": "^1.11.0",
+    "multer": "^2.0.0",
+    "pdfjs-dist": "^5.4.149",
+    "react": "^19.0.0",
+    "react-circular-progressbar": "^2.2.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-pdf": "^10.1.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.0",
+    "react-toastify": "^11.0.5",
+    "redux": "^5.0.1",
+    "serve": "^14.2.0",
+    "sheetjs": "^2.0.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^4.0.14",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@iconify/react": "^5.2.0",
+    "@lhci/cli": "^0.13.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.3.4",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "rollup-plugin-visualizer": "^6.0.5",
+    "terser": "^5.31.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.0",
+    "vite-plugin-remove-console": "^1.3.0"
+  },
+  "overrides": {
+    "glob": "^9.0.0",
+    "rimraf": "^4.4.1"
+  }
+}

@@ -1,0 +1,19 @@
+//@ts-ignore
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "lib": ["es2020", "dom", "dom.iterable"],
+    "jsx": "react-jsx",              
+    "allowJs": true,                  // Accepte les fichiers .js et .jsx
+    "checkJs": false,                 // Ignore les vérifications de type sur les fichiers JS
+    "noEmit": true,                   // Empêche la génération de fichiers compilés
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": false
+  },
+  "include": ["src"]
+}
