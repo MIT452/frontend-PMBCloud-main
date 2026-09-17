@@ -1,3 +1,5 @@
+Géré par : RABETOKOTANY Ny Tsanta Fiderana
+
 # PMBCloud Frontend
 
 Application frontend React/TypeScript pour PMBCloud - Plateforme de gestion de fichiers et communication d'équipe.
